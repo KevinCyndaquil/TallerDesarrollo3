@@ -3,5 +3,4 @@ com\tallerdesarollo\Api\controllers\CategoriaController.class
 com\tallerdesarollo\Api\exceptions\ResourceNotFoundException.class
 com\tallerdesarollo\Api\services\CategoriaService.class
 com\tallerdesarollo\Api\services\ICategoria.class
-com\tallerdesarollo\Api\repositories\CategoriaRepository.class
 com\tallerdesarollo\Api\entities\Categoria.class

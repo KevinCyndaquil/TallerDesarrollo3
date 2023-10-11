@@ -1,9 +1,6 @@
 package com.tallerdesarollo.Api.services;
 
 import com.tallerdesarollo.Api.entities.Categoria;
-import com.tallerdesarollo.Api.exceptions.ResourceNotFoundException;
-import com.tallerdesarollo.Api.repositories.CategoriaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,46 +12,50 @@ import java.util.Map;
 @Service
 public class CategoriaService implements ICategoria {
 
-    protected CategoriaRepository repository;
+    /*protected CategoriaRepository repository;
 
     @Autowired
     public CategoriaService(CategoriaRepository repository) {
         this.repository = repository;
-    }
+    }*/
 
     @Override
     public List<Categoria> consultarTodasCategorias() {
 
-        List<Categoria> result = repository.findAll();
+        /*List<Categoria> result = repository.findAll();
         if(result.isEmpty())
             throw new ResourceNotFoundException("No existe categorías registradas en la BD");
 
-        return repository.findAll();
+        return repository.findAll();*/
+        return List.of(new Categoria(1, "Hola", 1));
     }
 
     @Override
     public List<Categoria> consultarPorNivel(int niv) { //3
 
-        List<Categoria> result = repository.buscarPorNivel(niv); //3
+        /*List<Categoria> result = repository.buscarPorNivel(niv); //3
         if(result.isEmpty())
             throw new ResourceNotFoundException("No existe categorías asociadas a ese Nivel: " + niv);
 
-        return repository.buscarPorNivel(niv);
+        return repository.buscarPorNivel(niv);*/
+        return List.of(new Categoria(1, "Hola", 1));
     }
 
     @Override
     public ResponseEntity<Categoria> consultarUno(int idCat) {
-        Categoria obj = repository.findById(idCat).orElseThrow(() -> new ResourceNotFoundException("No existe categoría con el Id :" + idCat));
-        return ResponseEntity.ok(obj);
+        /*Categoria obj = repository.findById(idCat).orElseThrow(() -> new ResourceNotFoundException("No existe categoría con el Id :" + idCat));
+        return ResponseEntity.ok(obj);*/
+        return ResponseEntity.ok(new Categoria(1, "Hola", 1));
     }
 
     @Override
     public ResponseEntity<Categoria> consultarbyNombre(String nombre) {
-        Categoria object = repository.buscarPorNombre(nombre);
+        /*Categoria object = repository.buscarPorNombre(nombre);
         if (object==null)
             throw new ResourceNotFoundException("No existe una categoría con el nombre :" + nombre);
 
-        return ResponseEntity.ok(object);
+        return ResponseEntity.ok(object);*/
+        return ResponseEntity.ok(new Categoria(1, "Hola", 1));
     }
 
     @Override
@@ -62,7 +63,7 @@ public class CategoriaService implements ICategoria {
         Map<String, String> okResponse = new HashMap<>();
         okResponse.put("message", "La Categoría se ha registrado correctamente");
         okResponse.put("status", HttpStatus.CREATED.toString());
-        repository.save(obj);
+        //repository.save(obj);
         return new ResponseEntity<>(okResponse,HttpStatus.CREATED);
     }
 
@@ -76,13 +77,13 @@ public class CategoriaService implements ICategoria {
         errorResponse.put("message", "No existe Categoría con el Id: " + idCat);
         errorResponse.put("status", HttpStatus.NOT_FOUND.toString());
 
-        return repository.findById(idCat).map(p -> {
+        /*return repository.findById(idCat).map(p -> {
                     obj.setIdCat(idCat);
                     repository.save(obj);
                     return new ResponseEntity<>(okResponse, HttpStatus.OK);
                 })
-                .orElse(new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND));
-
+                .orElse(new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND));*/
+        return new ResponseEntity<>(okResponse, HttpStatus.FOUND);
     }
 
     @Override
@@ -96,11 +97,12 @@ public class CategoriaService implements ICategoria {
         okResponse.put("message", "El articulo fue eliminado correctamente");
         okResponse.put("status", HttpStatus.OK.toString());
 
-        return repository.findById(idCat).map(p -> {
+        /*return repository.findById(idCat).map(p -> {
                     repository.deleteById(idCat);
                     return new ResponseEntity<>(okResponse, HttpStatus.OK);
                 })
-                .orElse(new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND));
+                .orElse(new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND));*/
 
+        return new ResponseEntity<>(okResponse, HttpStatus.FOUND);
     }
 }
